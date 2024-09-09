@@ -27,6 +27,16 @@ int main(int argc, char *argv[]) {
 
     char *fileContents = readFile("input.txt");
     
+    if (argc > 3) {
+        fprintf(stderr, "usage: reverse <input> <output>\n");
+        exit(1);
+    }
+
+    if ((argv[1] != NULL && argv[2] != NULL) && strcmp(argv[1], argv[2]) == 0) {
+        fprintf(stderr, "reverse: input and output file must differ\n");
+        exit(1);
+    }
+
 
 }
 
