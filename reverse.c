@@ -22,6 +22,17 @@ char* readFile(char *fileName) {
     return fileContents;
 }
 
+char* getValueFromConsole(char *message) {
+    char *value;
+    size_t len = 0;
+    printf("%s", message);
+    if (getline(&value, &len, stdin) == -1) {
+        fprintf(stderr, "error: cannot read value from console\n");
+        exit(1);
+    }
+    value[strcspn(value, "\n")] = '\0';
+    return value;
+}
 
 int main(int argc, char *argv[]) {
     char *inputFile;
@@ -32,20 +43,20 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    if ((argv[1] != NULL && argv[2] != NULL) && strcmp(argv[1], argv[2]) == 0) {
-        fprintf(stderr, "reverse: input and output file must differ\n");
-        exit(1);
-    }
-
     if (argc == 1) {
-        inputFile = "input.txt";
-        outputFile = "output.txt";
+        inputFile = getValueFromConsole("Input file: ");
+        outputFile = getValueFromConsole("Output file: ");
     } else if (argc == 2) {
         inputFile = argv[1];
-        outputFile = "output.txt";
-    } else if (argc == 3) {
+        outputFile = getValueFromConsole("Output file: ");
+    } else {
         inputFile = argv[1];
         outputFile = argv[2];
+    }
+
+    if (strcmp(inputFile, outputFile) == 0) {
+        fprintf(stderr, "reverse: input and output file must differ\n");
+        exit(1);
     }
 
     char *fileContents = readFile(inputFile);
