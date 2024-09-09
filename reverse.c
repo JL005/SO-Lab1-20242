@@ -24,9 +24,9 @@ char* readFile(char *fileName) {
 
 
 int main(int argc, char *argv[]) {
+    char *inputFile;
+    char *outputFile;
 
-    char *fileContents = readFile("input.txt");
-    
     if (argc > 3) {
         fprintf(stderr, "usage: reverse <input> <output>\n");
         exit(1);
@@ -36,6 +36,19 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "reverse: input and output file must differ\n");
         exit(1);
     }
+
+    if (argc == 1) {
+        inputFile = "input.txt";
+        outputFile = "output.txt";
+    } else if (argc == 2) {
+        inputFile = argv[1];
+        outputFile = "output.txt";
+    } else if (argc == 3) {
+        inputFile = argv[1];
+        outputFile = argv[2];
+    }
+
+    char *fileContents = readFile(inputFile);
 
 
 }
